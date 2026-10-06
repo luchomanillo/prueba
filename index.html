@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Galería virtual</title>
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:#111;font-family:system-ui,sans-serif;touch-action:none}
+  canvas{display:block}
+  #hint{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:0;right:150px;padding:0 12px;color:#fff;font-size:12px;text-shadow:0 1px 3px #000;pointer-events:none}
+  #menu{position:fixed;top:calc(8px + env(safe-area-inset-top,0px));right:8px;display:flex;gap:4px}
+  #menu button{width:34px;height:34px;border:1px solid #fff8;border-radius:8px;background:#0008;color:#fff;font:600 14px system-ui}
+  #panel{position:fixed;left:0;right:0;bottom:0;max-width:520px;margin:0 auto;box-sizing:border-box;max-height:60%;overflow:auto;
+    padding:16px 18px calc(18px + env(safe-area-inset-bottom,0px));background:rgba(250,250,248,.97);color:#1d1d1b;
+    border-radius:14px 14px 0 0;transform:translateY(110%);transition:transform .3s}
+  #panel.on{transform:none}
+  #panel h2{margin:0 0 2px;font-size:1.1rem} #panel p{margin:2px 0;color:#555;font-size:.9rem}
+  .bt{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .bt a,.bt button{flex:1;min-width:110px;text-align:center;padding:11px 8px;border-radius:8px;border:1px solid #1d1d1b;background:#1d1d1b;color:#fff;font:600 14px system-ui;text-decoration:none}
+  .bt a.sec,.bt button{background:transparent;color:#1d1d1b}
+  #err{position:fixed;inset:0;display:none;align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+<div id="hint"></div><div id="menu"></div><div id="panel"></div><div id="err"></div>
+<script>
+// ====== CONFIGURACIÓN ======
+const VISOR_URL = "https://delightful-axolotl-922255.netlify.app/"; // visor AR: ?cuadro=lote-01
+const URL_SUBASTA = "";   // link de la subasta; {n} = número de lote. Ej: "https://sitio.com/lote/{n}". Vacío = sin botón
+const MONEDA = "";        // ej. "US$" o "$"
+const W = 14, L = 10, H = 3.6, T = .4, N = 4, POR_SALA = 20, ARCO = 1.4;
+// ===========================
+const S = L + T, EYE = 1.6, CEN = 1.5, zc = k => -k * S;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const sala = z => clamp(Math.round(-z / S), 0, N - 1);
+
+/*LAYOUT*/
+function segmentos(k) {
+  const z = zc(k), m = .6, e = ARCO + .4;
+  const far = k === N - 1 ? [[-W/2 + m, W/2 - m]] : [[-W/2 + m, -e], [e, W/2 - m]];
+  const near = k === 0 ? [[W/2 - m, -W/2 + m]] : [[W/2 - m, e], [-e, -W/2 + m]];
+  return [{ w: "izq", a: z + L/2 - m, b: z - L/2 + m }, ...far.map(([a, b]) => ({ w: "fondo", a, b })),
+          { w: "der", a: z - L/2 + m, b: z + L/2 - m }, ...near.map(([a, b]) => ({ w: "frente", a, b }))];
+}
+function colocar(items, k) { // items [{w: metros}] -> [{i, wall, pos, gap}]
+  const segs = segmentos(k), len = s => Math.abs(s.b - s.a), tot = segs.reduce((q, s) => q + len(s), 0);
+  const need = items.reduce((q, i) => q + i.w + .5, 0), cum = []; let c = 0;
+  segs.forEach(s => { c += len(s) / tot * need; cum.push(c); });
+  const grp = segs.map(() => []); let acc = 0, idx = 0;
+  items.forEach(i => { const mid = acc + (i.w + .5) / 2; while (idx < segs.length - 1 && mid > cum[idx]) idx++; grp[idx].push(i); acc += i.w + .5; });
+  const out = [];
+  segs.forEach((s, j) => {
+    const g = grp[j], n = g.length; if (!n) return;
+    const dir = Math.sign(s.b - s.a), gap = (len(s) - g.reduce((q, i) => q + i.w, 0)) / (n + 1); let p = 0;
+    g.forEach(i => { p += gap + i.w / 2; out.push({ i, wall: s.w, pos: s.a + dir * p, gap }); p += i.w / 2; });
+  });
+  return out;
+}
+/*END*/
+
+const MURO = {
+  fondo:  { n: [0,0,1],  ry: 0,           xz: (p, z) => [p, z - L/2] },
+  frente: { n: [0,0,-1], ry: Math.PI,     xz: (p, z) => [p, z + L/2] },
+  izq:    { n: [1,0,0],  ry: Math.PI/2,   xz: (p, z) => [-W/2, p] },
+  der:    { n: [-1,0,0], ry: -Math.PI/2,  xz: (p, z) => [W/2, p] },
+};
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0x111111);
+const cam = new THREE.PerspectiveCamera(70, 1, .05, 70); cam.rotation.order = "YXZ"; cam.position.set(0, EYE, L/2 - 1.8);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.outputEncoding = THREE.sRGBEncoding;
+document.body.prepend(renderer.domElement);
+
+// ---- arquitectura ----
+const lam = c => new THREE.MeshLambertMaterial({ color: c, side: THREE.DoubleSide });
+const bloq = [], total = (N - 1) * S + L, zmid = -(N - 1) * S / 2, mPared = lam(0xf4f2ee);
+function plano(w, h, m, pos, rot) { const p = new THREE.Mesh(new THREE.PlaneGeometry(w, h), m); p.position.set(...pos); p.rotation.set(...rot); scene.add(p); bloq.push(p); return p; }
+const piso = plano(W, total, lam(0xcfc8bc), [0, 0, zmid], [-Math.PI/2, 0, 0]);
+plano(W, total, lam(0xffffff), [0, H, zmid], [Math.PI/2, 0, 0]);
+plano(total, H, mPared, [-W/2, H/2, zmid], [0, Math.PI/2, 0]);
+plano(total, H, mPared, [W/2, H/2, zmid], [0, -Math.PI/2, 0]);
+plano(W, H, mPared, [0, H/2, L/2], [0, Math.PI, 0]);
+plano(W, H, mPared, [0, H/2, zc(N - 1) - L/2], [0, 0, 0]);
+for (let k = 1; k < N; k++) { // tabique con arcada entre sala k-1 y k
+  const sh = new THREE.Shape(); sh.moveTo(-W/2, 0); sh.lineTo(W/2, 0); sh.lineTo(W/2, H); sh.lineTo(-W/2, H); sh.closePath();
+  const h = new THREE.Path(); h.moveTo(-ARCO, 0); h.lineTo(-ARCO, 1.8); h.absarc(0, 1.8, ARCO, Math.PI, 0, true); h.lineTo(ARCO, 0); h.closePath();
+  sh.holes.push(h);
+  const m = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, { depth: T, bevelEnabled: false }), mPared);
+  m.position.z = zc(k - 1) - L/2 - T; scene.add(m); bloq.push(m);
+}
+scene.add(new THREE.HemisphereLight(0xffffff, 0xbbb4a8, .95));
+for (let k = 0; k < N; k++) { const p = new THREE.PointLight(0xfff2dd, .35, 14); p.position.set(0, H - .3, zc(k)); scene.add(p); }
+
+// ---- obras ----
+const P = [], lienzos = [], loader = new THREE.TextureLoader();
+function placeholder(c) {
+  const cv = document.createElement("canvas"); cv.width = cv.height = 128; const x = cv.getContext("2d");
+  x.fillStyle = `hsl(${c.lote * 47 % 360},25%,82%)`; x.fillRect(0, 0, 128, 128);
+  x.fillStyle = "#0006"; x.font = "bold 56px system-ui"; x.textAlign = "center"; x.textBaseline = "middle"; x.fillText(c.lote, 64, 64);
+  const t = new THREE.CanvasTexture(cv); t.encoding = THREE.sRGBEncoding; return t;
+}
+function poner(p, t) { const old = p.tex; p.lienzo.material.map = t; p.lienzo.material.needsUpdate = true; p.tex = t === p.ph ? null : t; if (old && old !== t) old.dispose(); }
+function ajustar(p, img) { // orientación / medidas estimadas según la proporción real de la imagen
+  const a = img.width / img.height; let w = p.c.ancho, h = p.c.alto;
+  if (p.c.estimada) { w = a >= 1 ? 60 : 60 * a; h = a >= 1 ? 60 / a : 60; }
+  else if ((a > 1.05 && w < h) || (a < .95 && w > h)) [w, h] = [h, w];
+  p.lienzo.scale.set(w / 100 / p.w0, h / 100 / p.h0, 1); p.marco.scale.set((w / 100 + .06) / (p.w0 + .06), (h / 100 + .06) / (p.h0 + .06), 1);
+  p.wf = w / 100; p.hf = h / 100;
+}
+function cargar(p) {
+  if (p.cargado) return; p.cargado = 1;
+  loader.load(`img/thumbs/${p.c.id}.jpg`, t => { if (!p.cargado) { t.dispose(); return; } t.encoding = THREE.sRGBEncoding; poner(p, t); ajustar(p, t.image); }, undefined, () => {});
+}
+function soltar(p) { if (!p.cargado) return; p.cargado = 0; poner(p, p.ph); }
+let salaAct = -1;
+function actualizarSalas(k) { if (k === salaAct) return; salaAct = k; P.forEach(p => Math.abs(p.sala - k) <= 1 ? cargar(p) : soltar(p)); }
+
+function construir(lotes) {
+  for (let k = 0; k < N; k++) {
+    const items = lotes.slice(k * POR_SALA, (k + 1) * POR_SALA).map(c => ({ c, w: c.ancho / 100 }));
+    colocar(items, k).forEach(({ i, wall, pos }) => {
+      const c = i.c, M = MURO[wall], [px, pz] = M.xz(pos, zc(k)), w = c.ancho / 100, h = c.alto / 100;
+      const ph = placeholder(c), g = new THREE.Group();
+      const marco = new THREE.Mesh(new THREE.BoxGeometry(w + .06, h + .06, .04), lam(0x1a1a1a)); marco.position.z = .02; g.add(marco);
+      const lienzo = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: ph })); lienzo.position.z = .0405; g.add(lienzo);
+      g.position.set(px, CEN, pz); g.rotation.y = M.ry; scene.add(g);
+      const p = { c, sala: k, lienzo, marco, ph, w0: w, h0: h, wf: w, hf: h, centro: new THREE.Vector3(px, CEN, pz), n: new THREE.Vector3(...M.n) };
+      lienzo.userData.p = p; lienzos.push(lienzo); P.push(p);
+    });
+  }
+  actualizarSalas(0);
+}
+
+// ---- cámara y recorrido ----
+let yaw = 0, pitch = 0, tw = null, previa = null, hi = null;
+const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+function ruta(dest) { // pasa por el centro de las arcadas al cambiar de sala
+  const k0 = sala(cam.position.z), k1 = sala(dest.z), st = Math.sign(k1 - k0), pts = [];
+  for (let k = k0; k !== k1; k += st) pts.push(new THREE.Vector3(0, EYE, st > 0 ? zc(k) - L/2 - T/2 : zc(k) + L/2 + T/2));
+  pts.push(dest); return pts;
+}
+function ir(dest, yawF, pitchF) {
+  const A = [cam.position.clone(), ...ruta(dest)], seg = []; let tot = 0;
+  for (let i = 0; i < A.length - 1; i++) { const d = A[i].distanceTo(A[i + 1]); seg.push(d); tot += d; }
+  tw = { t: performance.now(), dur: clamp(tot / 2.8 * 1000, 700, 6000), A, seg, tot, y0: yaw, y1: yaw + ((yawF - yaw + Math.PI * 3) % (Math.PI * 2)) - Math.PI, a0: pitch, a1: pitchF };
+}
+const panel = document.getElementById("panel");
+function enfocar(p) {
+  const c = p.c; if (!previa) previa = { pos: cam.position.clone(), yaw, pitch };
+  const tv = Math.tan(cam.fov * Math.PI / 360), th = tv * cam.aspect, d = Math.max(p.hf / (2 * tv * .75), p.wf / (2 * th * .75), .9);
+  ir(p.centro.clone().addScaledVector(p.n, d), Math.atan2(p.n.x, p.n.z), 0);
+  if (hi && hi !== p) { const q = hi; hi = null; q.cargado = 0; poner(q, q.ph); if (Math.abs(q.sala - salaAct) <= 1) cargar(q); }
+  hi = p; loader.load(`img/${c.id}.jpg`, t => { if (hi !== p) { t.dispose(); return; } t.encoding = THREE.sRGBEncoding; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); poner(p, t); }, undefined, () => {});
+  const precio = `${MONEDA ? MONEDA + " " : ""}${c.precio.toLocaleString("es-AR")}`;
+  const sub = [c.tecnica, c.ano].filter(Boolean).join(" · ");
+  panel.innerHTML = `<p>Lote ${c.lote}</p><h2>${c.titulo || "Sin título"}</h2><p><b>${c.artista}</b></p>${sub ? `<p>${sub}</p>` : ""}
+    <p>${c.medidas ? "Obra: " + c.medidas + " (sin marco)" : "Medidas a confirmar"}</p>${c.detalle ? `<p>${c.detalle}</p>` : ""}<p>Precio base: ${precio}</p>
+    <div class="bt">${URL_SUBASTA ? `<a href="${URL_SUBASTA.replace("{n}", c.lote)}" target="_blank">Ver en la subasta</a>` : ""}
+    <a class="sec" href="${VISOR_URL}?cuadro=${c.id}" target="_blank">Ver en tu pared</a><button id="volver">Volver</button></div>`;
+  panel.classList.add("on");
+  document.getElementById("volver").onclick = () => { cerrar(); if (previa) ir(previa.pos, previa.yaw, previa.pitch); previa = null; };
+}
+const cerrar = () => panel.classList.remove("on");
+
+// ---- entrada ----
+const cv = renderer.domElement, ray = new THREE.Raycaster(), v2 = new THREE.Vector2(); let down = null;
+cv.addEventListener("pointerdown", e => { down = { x: e.clientX, y: e.clientY, t: performance.now(), m: 0 }; cv.setPointerCapture(e.pointerId); });
+cv.addEventListener("pointermove", e => {
+  if (!down) return; const dx = e.clientX - down.x, dy = e.clientY - down.y;
+  down.m += Math.abs(dx) + Math.abs(dy); down.x = e.clientX; down.y = e.clientY;
+  if (down.m > 6) { tw = null; yaw += dx * .005; pitch = clamp(pitch + dy * .005, -1.2, 1.2); }
+});
+cv.addEventListener("pointerup", e => {
+  const d = down; down = null; if (!d || d.m > 6 || performance.now() - d.t > 400) return;
+  v2.set(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(v2, cam);
+  const hit = ray.intersectObjects([...lienzos, ...bloq])[0]; if (!hit) return;
+  if (hit.object.userData.p) return enfocar(hit.object.userData.p);
+  if (hit.object !== piso) return;
+  cerrar(); previa = null;
+  ir(new THREE.Vector3(clamp(hit.point.x, -W/2 + .5, W/2 - .5), EYE, clamp(hit.point.z, zc(N - 1) - L/2 + .5, L/2 - .5)), yaw, pitch);
+});
+const keys = {}; addEventListener("keydown", e => keys[e.code] = true); addEventListener("keyup", e => keys[e.code] = false);
+const menu = document.getElementById("menu");
+for (let k = 0; k < N; k++) { const b = document.createElement("button"); b.textContent = k + 1; b.title = "Sala " + (k + 1);
+  b.onclick = () => { cerrar(); previa = null; ir(new THREE.Vector3(0, EYE, zc(k) + L/2 - 1.8), 0, 0); }; menu.append(b); }
+document.getElementById("hint").textContent = "Arrastrá para mirar · tocá el piso para caminar · tocá una obra para acercarte";
+function resize() { cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); }
+addEventListener("resize", resize); resize();
+
+let last = performance.now();
+renderer.setAnimationLoop(now => {
+  const dt = Math.min((now - last) / 1000, .1); last = now;
+  if (tw) {
+    const k = Math.min((now - tw.t) / tw.dur, 1), e = ease(k); let d = e * tw.tot, i = 0;
+    while (i < tw.seg.length - 1 && d > tw.seg[i]) { d -= tw.seg[i]; i++; }
+    cam.position.lerpVectors(tw.A[i], tw.A[i + 1], tw.seg[i] ? d / tw.seg[i] : 1);
+    yaw = tw.y0 + (tw.y1 - tw.y0) * e; pitch = tw.a0 + (tw.a1 - tw.a0) * e; if (k >= 1) tw = null;
+  }
+  const f = (keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0), r = (keys.KeyD || keys.ArrowRight ? 1 : 0) - (keys.KeyA || keys.ArrowLeft ? 1 : 0);
+  if (f || r) {
+    tw = null; cerrar(); previa = null;
+    const ox = cam.position.x, oz = cam.position.z;
+    let nx = clamp(ox + (-Math.sin(yaw) * f + Math.cos(yaw) * r) * 2.5 * dt, -W/2 + .4, W/2 - .4);
+    let nz = clamp(oz + (-Math.cos(yaw) * f - Math.sin(yaw) * r) * 2.5 * dt, zc(N - 1) - L/2 + .4, L/2 - .4);
+    for (let k = 1; k < N; k++) if (Math.abs(nz - (zc(k - 1) - L/2 - T/2)) < T/2 + .35 && Math.abs(nx) > ARCO - .3) nz = oz;
+    cam.position.set(nx, EYE, nz);
+  }
+  actualizarSalas(sala(cam.position.z));
+  cam.rotation.set(pitch, yaw, 0); renderer.render(scene, cam);
+});
+
+fetch("lotes.json").then(r => r.json()).then(construir).catch(() => {
+  const e = document.getElementById("err"); e.style.display = "flex";
+  e.textContent = "No se pudo cargar lotes.json. Abrí la galería desde el sitio publicado (Netlify), no con doble clic en el archivo.";
+});
+</script>
+</body>
+</html>
