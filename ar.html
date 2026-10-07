@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ver cuadro en tu pared</title>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+<style>
+  html, body { margin:0; height:100%; background:#fafaf8; font-family:system-ui,sans-serif; }
+  model-viewer { width:100%; height:100%; --poster-color:#fafaf8; }
+  #ar-btn {
+    position:absolute; left:50%; transform:translateX(-50%);
+    bottom:calc(24px + env(safe-area-inset-bottom, 0px));
+    padding:14px 26px; border:0; border-radius:999px;
+    background:#1d1d1b; color:#fff; font:600 16px system-ui,sans-serif;
+  }
+  #aviso { position:absolute; top:12px; left:0; right:0; text-align:center; font-size:13px; color:#6b6b66; }
+</style>
+</head>
+<body>
+<model-viewer id="mv" alt="Cuadro en realidad aumentada"
+  ar ar-modes="scene-viewer quick-look webxr" ar-placement="wall"
+  camera-controls touch-action="pan-y" shadow-intensity="1" exposure="1">
+  <button slot="ar-button" id="ar-btn">Ver en tu pared</button>
+</model-viewer>
+<div id="aviso">Tocá el botón y apuntá el celular a la pared</div>
+
+<script>
+  // Uso: ar.html?cuadro=lote-01  ->  carga img/lote-01.glb
+  const nombre = new URLSearchParams(location.search).get("cuadro") || "lote-01";
+  const mv = document.getElementById("mv");
+  mv.src = "img/" + nombre + ".glb"; // los modelos están en la carpeta img/ junto a las fotos
+  mv.addEventListener("error", () => { document.getElementById("aviso").textContent = "Todavía no está disponible la vista en realidad aumentada de este cuadro."; });
+  mv.alt = "Cuadro " + nombre;
+</script>
+</body>
+</html>
