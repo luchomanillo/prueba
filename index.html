@@ -49,7 +49,7 @@ const EXTRA_CM = 30;     // se suma al ancho y al alto de cada obra en la sala (
 const MARCO_3D = false;  // false = la foto ya incluye el marco (sin borde extra). true = agrega un marco oscuro de 3 cm
 const W = 14, L = 10, H = 3.6, T = .4, N = 4, POR_SALA = 20, ARCO = 1.4;
 // ===========================
-const VERSION = "v16";
+const VERSION = "v17";
 const DEBUG = /debug/.test(location.search), dbgEl = document.getElementById("dbg");
 const dbg = m => { if (DEBUG) dbgEl.textContent += m + "\n"; };
 dbg("galería " + VERSION + " - modo diagnóstico");
@@ -88,7 +88,7 @@ const MURO = {
   der:    { n: [-1,0,0], ry: -Math.PI/2,  xz: (p, z) => [W/2, p] },
 };
 const scene = new THREE.Scene(); scene.background = new THREE.Color(0x111111);
-const cam = new THREE.PerspectiveCamera(70, 1, .05, 70); cam.rotation.order = "YXZ"; cam.position.set(0, EYE, L/2 - 1.8);
+const cam = new THREE.PerspectiveCamera(70, 1, .1, 60); cam.rotation.order = "YXZ"; cam.position.set(0, EYE, L/2 - 1.8);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.outputEncoding = THREE.sRGBEncoding;
 document.body.prepend(renderer.domElement);
@@ -104,8 +104,8 @@ plano(total, H, mPared, [W/2, H/2, zmid], [0, -Math.PI/2, 0]);
 plano(W, H, mPared, [0, H/2, L/2], [0, Math.PI, 0]);
 plano(W, H, mPared, [0, H/2, zc(N - 1) - L/2], [0, 0, 0]);
 for (let k = 1; k < N; k++) { // tabique con arcada entre sala k-1 y k
-  const sh = new THREE.Shape(); sh.moveTo(-W/2, 0); sh.lineTo(W/2, 0); sh.lineTo(W/2, H); sh.lineTo(-W/2, H); sh.closePath();
-  const h = new THREE.Path(); h.moveTo(-ARCO, 0); h.lineTo(-ARCO, 1.8); h.absarc(0, 1.8, ARCO, Math.PI, 0, true); h.lineTo(ARCO, 0); h.closePath();
+  const sh = new THREE.Shape(); sh.moveTo(-W/2 - .01, -.02); sh.lineTo(W/2 + .01, -.02); sh.lineTo(W/2 + .01, H + .01); sh.lineTo(-W/2 - .01, H + .01); sh.closePath(); // sobresale 1-2 cm: evita caras coincidentes (titileo)
+  const h = new THREE.Path(); h.moveTo(-ARCO, -.02); h.lineTo(-ARCO, 1.8); h.absarc(0, 1.8, ARCO, Math.PI, 0, true); h.lineTo(ARCO, -.02); h.closePath();
   sh.holes.push(h);
   const m = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, { depth: T, bevelEnabled: false }), mPared);
   m.position.z = zc(k - 1) - L/2 - T; scene.add(m); bloq.push(m);
@@ -165,9 +165,9 @@ function construir(lotes) {
       const c = i.c, M = MURO[wall], [px, pz] = M.xz(pos, zc(k)), w = (c.ancho + EXTRA_CM) / 100, h = (c.alto + EXTRA_CM) / 100;
       const ph = NEUTRO, g = new THREE.Group();
       const marco = new THREE.Mesh(new THREE.BoxGeometry(w + MG, h + MG, .04), lam(0x1a1a1a)); marco.position.z = .02; g.add(marco);
-      const lienzo = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: ph }));
-      lienzo.position.z = .0405; g.add(lienzo);
-      g.position.set(px, CEN, pz); g.rotation.y = M.ry; scene.add(g);
+      const lienzo = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: ph, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
+      lienzo.position.z = .045; g.add(lienzo);
+      g.position.set(px + M.n[0] * .002, CEN, pz + M.n[2] * .002); g.rotation.y = M.ry; scene.add(g);
       const p = { c, sala: k, lienzo, marco, ph, w0: w, h0: h, wf: w, hf: h, centro: new THREE.Vector3(px, CEN, pz), n: new THREE.Vector3(...M.n) };
       lienzo.userData.p = p; lienzos.push(lienzo); P.push(p);
     });
@@ -256,7 +256,7 @@ const abrirAyuda = () => modal.classList.add("on");
 document.getElementById("ok").onclick = () => { modal.classList.remove("on"); try { localStorage.setItem("galeria-ayuda", "1"); } catch (e) {} };
 document.getElementById("ayuda").onclick = abrirAyuda;
 try { if (!localStorage.getItem("galeria-ayuda")) abrirAyuda(); } catch (e) { abrirAyuda(); } // se abre sola la primera vez
-const bt = { f: 0, g: 0 };
+const bt = { f: 0, g: 0 }, vel = { f: 0, r: 0, g: 0 };
 [["adelante", "f", 1], ["atras", "f", -1], ["izq", "g", 1], ["der", "g", -1]].forEach(([id, k, v]) => {
   const b = document.getElementById(id), off = () => { bt[k] = 0; };
   b.addEventListener("pointerdown", e => { e.preventDefault(); bt[k] = v; b.setPointerCapture(e.pointerId); });
@@ -274,10 +274,14 @@ renderer.setAnimationLoop(now => {
     yaw = tw.y0 + (tw.y1 - tw.y0) * e; pitch = tw.a0 + (tw.a1 - tw.a0) * e; if (k >= 1) tw = null;
   }
   const f = clamp((keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0) + bt.f, -1, 1), r = (keys.KeyD || keys.ArrowRight ? 1 : 0) - (keys.KeyA || keys.ArrowLeft ? 1 : 0);
-  if (bt.g) { tw = null; yaw += bt.g * 1.6 * dt; }
-  if (f || r) {
-    tw = null; cerrar(); previa = null;
-    mover((-Math.sin(yaw) * f + Math.cos(yaw) * r) * 2.5 * dt, (-Math.cos(yaw) * f - Math.sin(yaw) * r) * 2.5 * dt);
+  const g = bt.g, a = 1 - Math.exp(-9 * dt); // arranque y frenado graduales
+  vel.f += (f - vel.f) * a; vel.r += (r - vel.r) * a; vel.g += (g - vel.g) * a;
+  if (f || r || g) tw = null;
+  if (tw) { vel.f = vel.r = vel.g = 0; }
+  if (f || r) { cerrar(); previa = null; }
+  if (Math.abs(vel.g) > .01) yaw += vel.g * 1.4 * dt;
+  if (Math.abs(vel.f) > .01 || Math.abs(vel.r) > .01) {
+    mover((-Math.sin(yaw) * vel.f + Math.cos(yaw) * vel.r) * 2.2 * dt, (-Math.cos(yaw) * vel.f - Math.sin(yaw) * vel.r) * 2.2 * dt);
   }
   actualizarSalas(sala(cam.position.z));
   cam.rotation.set(pitch, yaw, 0); renderer.render(scene, cam);
