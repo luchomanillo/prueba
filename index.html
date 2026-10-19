@@ -15,8 +15,8 @@
     border-radius:14px 14px 0 0;transform:translateY(110%);transition:transform .3s}
   #panel.on{transform:none}
   #panel h2{margin:0 0 2px;font-size:1.1rem} #panel p{margin:2px 0;color:#555;font-size:.9rem}
-  .bt{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-  .bt a,.bt button{flex:1;min-width:110px;text-align:center;padding:11px 8px;border-radius:8px;border:1px solid #1d1d1b;background:#1d1d1b;color:#fff;font:600 14px system-ui;text-decoration:none}
+  .bt{display:flex;gap:8px;margin-top:12px}
+  .bt a,.bt button{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;padding:11px 4px;border-radius:8px;border:1px solid #1d1d1b;background:#1d1d1b;color:#fff;font:600 clamp(12px,3.4vw,14px) system-ui;text-decoration:none}
   .bt a.sec,.bt button{background:transparent;color:#1d1d1b}
   #ayuda{position:fixed;top:calc(8px + env(safe-area-inset-top,0px));left:8px;width:46px;height:46px;border-radius:50%;border:2px solid #fff;background:#000a;color:#fff;font:700 26px system-ui}
   #pad{position:fixed;right:12px;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:repeat(3,58px);grid-template-rows:repeat(2,58px);gap:6px}
@@ -49,7 +49,7 @@ const EXTRA_CM = 30;     // se suma al ancho y al alto de cada obra en la sala (
 const MARCO_3D = false;  // false = la foto ya incluye el marco (sin borde extra). true = agrega un marco oscuro de 3 cm
 const W = 14, L = 10, H = 3.6, T = .4, N = 4, POR_SALA = 20, ARCO = 1.4;
 // ===========================
-const VERSION = "v17";
+const VERSION = "v18";
 const DEBUG = /debug/.test(location.search), dbgEl = document.getElementById("dbg");
 const dbg = m => { if (DEBUG) dbgEl.textContent += m + "\n"; };
 dbg("galería " + VERSION + " - modo diagnóstico");
@@ -210,10 +210,10 @@ function enfocar(p) {
     () => { dbg("NO ENCONTRADA grande " + c.id); const f = document.getElementById("falta"); if (hi === p && !p.tex && f) f.style.display = "block"; });
   const precio = `${MONEDA ? MONEDA + " " : ""}${c.precio.toLocaleString("es-AR")}`;
   const sub = [c.tecnica, c.ano].filter(Boolean).join(" · ");
+  const ext = c.subasta || (URL_SUBASTA ? URL_SUBASTA.replace("{n}", c.lote) : ""), oferta = /^https:\/\/[^\s"<>]+$/.test(ext) ? ext : "";
   panel.innerHTML = `<p>Lote ${c.lote}</p><h2>${c.titulo || "Sin título"}</h2><p><b>${c.artista}</b>${c.datos ? " · " + c.datos : ""}</p>${sub ? `<p>${sub}</p>` : ""}
     <p>${c.medidas ? "Obra: " + c.medidas + " (sin marco)" : "Medidas a confirmar"}</p>${c.detalle ? `<p>${c.detalle}</p>` : ""}<p>Precio base: ${precio}</p><p id="falta" style="display:none;color:#a33">La foto de esta obra todavía no está disponible.</p>
-    <div class="bt">${URL_SUBASTA ? `<a href="${URL_SUBASTA.replace("{n}", c.lote)}" target="_blank">Ver en la subasta</a>` : ""}
-    <a class="sec" href="${VISOR_URL}?cuadro=${c.id}" target="_blank">Ver en tu pared</a><button id="volver">Volver</button></div>`;
+    <div class="bt"><a class="sec" href="${VISOR_URL}?cuadro=${c.id}" target="_blank">Ver en tu pared</a>${oferta ? `<a href="${oferta}" target="_blank" rel="noopener noreferrer">Ofertar</a>` : ""}<button id="volver">Volver</button></div>`;
   panel.classList.add("on"); document.body.classList.add("ficha");
   document.getElementById("volver").onclick = () => { cerrar(); if (previa) ir(previa.pos, previa.yaw, previa.pitch); previa = null; };
 }

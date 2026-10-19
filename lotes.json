@@ -12,7 +12,8 @@
   "estimada": false,
   "ano": 2009,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 1200
+  "precio": 1200,
+  "subasta": "https://www.livesubastas.com/item/819/13244?page=1"
  },
  {
   "lote": 2,
@@ -27,7 +28,8 @@
   "estimada": false,
   "ano": 1990,
   "detalle": "Firmado y fechado en el ángulo inferior derecho.",
-  "precio": 3000
+  "precio": 3000,
+  "subasta": "https://www.livesubastas.com/item/819/13245?page=1"
  },
  {
   "lote": 3,
@@ -42,7 +44,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 150
+  "precio": 250,
+  "subasta": "https://www.livesubastas.com/item/819/13246?page=1"
  },
  {
   "lote": 4,
@@ -57,13 +60,14 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 1200
+  "precio": 800,
+  "subasta": "https://www.livesubastas.com/item/819/13353?page=1"
  },
  {
   "lote": 5,
   "id": "lote-05",
   "artista": "Venditti, Mario",
-  "datos": "Contemporáneo (n. 1071)",
+  "datos": null,
   "titulo": "Paisaje",
   "tecnica": "Óleo sobre tela",
   "medidas": "70 x 70 cm.",
@@ -72,7 +76,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 300
+  "precio": 200,
+  "subasta": "https://www.livesubastas.com/item/819/13354?page=1"
  },
  {
   "lote": 6,
@@ -87,7 +92,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado y titulado al dorso",
-  "precio": 200
+  "precio": 200,
+  "subasta": "https://www.livesubastas.com/item/819/13355?page=1"
  },
  {
   "lote": 7,
@@ -102,7 +108,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 1200
+  "precio": 1500,
+  "subasta": "https://www.livesubastas.com/item/819/13356?page=1"
  },
  {
   "lote": 8,
@@ -117,7 +124,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo superior derecho.",
-  "precio": 12000
+  "precio": 12000,
+  "subasta": "https://www.livesubastas.com/item/819/13357?page=1"
  },
  {
   "lote": 9,
@@ -132,7 +140,8 @@
   "estimada": false,
   "ano": 2008,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 2500
+  "precio": 2500,
+  "subasta": "https://www.livesubastas.com/item/819/13358?page=1"
  },
  {
   "lote": 10,
@@ -141,13 +150,14 @@
   "datos": "Contemporáneo (n. 1973)",
   "titulo": "Figura con paño rojo",
   "tecnica": "Óleo sobre tela",
-  "medidas": "70 X 80 cm.",
+  "medidas": "70 x 80 cm.",
   "alto": 70.0,
   "ancho": 80.0,
   "estimada": false,
   "ano": 2008,
   "detalle": "Firmado y fechado en el ángulo inferior derecho.",
-  "precio": 1000
+  "precio": 800,
+  "subasta": "https://www.livesubastas.com/item/819/13359?page=1"
  },
  {
   "lote": 11,
@@ -162,7 +172,8 @@
   "estimada": false,
   "ano": 2000,
   "detalle": "Firmado y fechado en el ángulo inferior derecho.",
-  "precio": 300
+  "precio": 200,
+  "subasta": "https://www.livesubastas.com/item/819/13360?page=1"
  },
  {
   "lote": 12,
@@ -177,7 +188,8 @@
   "estimada": false,
   "ano": 1996,
   "detalle": "Firmado y fechado en ángulo inferior derecho.",
-  "precio": 1200
+  "precio": 1200,
+  "subasta": "https://www.livesubastas.com/item/819/13361?page=1"
  },
  {
   "lote": 13,
@@ -192,7 +204,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 300
+  "precio": 300,
+  "subasta": "https://www.livesubastas.com/item/819/13362?page=1"
  },
  {
   "lote": 14,
@@ -207,7 +220,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 200
+  "precio": 200,
+  "subasta": "https://www.livesubastas.com/item/819/13363?page=1"
  },
  {
   "lote": 15,
@@ -222,7 +236,8 @@
   "estimada": false,
   "ano": 1964,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 500
+  "precio": 400,
+  "subasta": "https://www.livesubastas.com/item/819/13364?page=1"
  },
  {
   "lote": 16,
@@ -237,7 +252,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 200
+  "precio": 200,
+  "subasta": "https://www.livesubastas.com/item/819/13365?page=1"
  },
  {
   "lote": 17,
@@ -252,7 +268,8 @@
   "estimada": false,
   "ano": 2016,
   "detalle": "Firmado en el ángulo inferior derecho. Firmado, titulado y fechado al dorso.",
-  "precio": 1500
+  "precio": 1500,
+  "subasta": "https://www.livesubastas.com/item/819/13366?page=1"
  },
  {
   "lote": 18,
@@ -267,7 +284,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo superior derecho",
-  "precio": 8000
+  "precio": 8000,
+  "subasta": "https://www.livesubastas.com/item/819/13367?page=1"
  },
  {
   "lote": 19,
@@ -282,7 +300,8 @@
   "estimada": false,
   "ano": 1965,
   "detalle": "Firmado y fechado en el ángulo inferior izquierdo.",
-  "precio": 2500
+  "precio": 2500,
+  "subasta": "https://www.livesubastas.com/item/819/13368?page=1"
  },
  {
   "lote": 20,
@@ -297,7 +316,8 @@
   "estimada": false,
   "ano": 2013,
   "detalle": "Firmado y fechado en el ángulo inferior derecho.",
-  "precio": 800
+  "precio": 500,
+  "subasta": "https://www.livesubastas.com/item/819/13369?page=1"
  },
  {
   "lote": 21,
@@ -312,7 +332,8 @@
   "estimada": false,
   "ano": 2014,
   "detalle": "Firmado y fechado en el ángulo inferior izquierdo.",
-  "precio": 400
+  "precio": 400,
+  "subasta": "https://www.livesubastas.com/item/819/13370?page=1"
  },
  {
   "lote": 22,
@@ -327,7 +348,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 1200
+  "precio": 800,
+  "subasta": "https://www.livesubastas.com/item/819/13371?page=1"
  },
  {
   "lote": 23,
@@ -342,7 +364,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 300
+  "precio": 300,
+  "subasta": "https://www.livesubastas.com/item/819/13372?page=1"
  },
  {
   "lote": 24,
@@ -357,7 +380,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 200
+  "precio": 200,
+  "subasta": "https://www.livesubastas.com/item/819/13373?page=1"
  },
  {
   "lote": 25,
@@ -372,7 +396,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 600
+  "precio": 500,
+  "subasta": "https://www.livesubastas.com/item/819/13374?page=1"
  },
  {
   "lote": 26,
@@ -387,7 +412,8 @@
   "estimada": true,
   "ano": null,
   "detalle": null,
-  "precio": 200
+  "precio": 500,
+  "subasta": "https://www.livesubastas.com/item/819/13375?page=1"
  },
  {
   "lote": 27,
@@ -402,7 +428,8 @@
   "estimada": false,
   "ano": 2007,
   "detalle": "Firmado y fechado en el ángulo inferior derecho.",
-  "precio": 1500
+  "precio": 1500,
+  "subasta": "https://www.livesubastas.com/item/819/13376?page=1"
  },
  {
   "lote": 28,
@@ -417,7 +444,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 8000
+  "precio": 8000,
+  "subasta": "https://www.livesubastas.com/item/819/13377?page=1"
  },
  {
   "lote": 29,
@@ -432,7 +460,8 @@
   "estimada": false,
   "ano": 2005,
   "detalle": "Firmado y fechado en el ángulo inferior derecho.",
-  "precio": 2500
+  "precio": 2500,
+  "subasta": "https://www.livesubastas.com/item/819/13378?page=1"
  },
  {
   "lote": 30,
@@ -447,7 +476,8 @@
   "estimada": false,
   "ano": 1994,
   "detalle": "Firmado en el ángulo inferior izquierdo. Certificado al dorso",
-  "precio": 700
+  "precio": 500,
+  "subasta": "https://www.livesubastas.com/item/819/13379?page=1"
  },
  {
   "lote": 31,
@@ -462,7 +492,8 @@
   "estimada": false,
   "ano": 2000,
   "detalle": "Firmado y fechado en el ángulo inferior derecho.",
-  "precio": 400
+  "precio": 400,
+  "subasta": "https://www.livesubastas.com/item/819/13380?page=1"
  },
  {
   "lote": 32,
@@ -477,7 +508,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 1200
+  "precio": 800,
+  "subasta": "https://www.livesubastas.com/item/819/13381?page=1"
  },
  {
   "lote": 33,
@@ -492,7 +524,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 300
+  "precio": 300,
+  "subasta": "https://www.livesubastas.com/item/819/13382?page=1"
  },
  {
   "lote": 34,
@@ -507,7 +540,8 @@
   "estimada": false,
   "ano": 1967,
   "detalle": "Firmado, titulado y fechado al dorso",
-  "precio": 800
+  "precio": 500,
+  "subasta": "https://www.livesubastas.com/item/819/13383?page=1"
  },
  {
   "lote": 35,
@@ -522,7 +556,8 @@
   "estimada": false,
   "ano": 1961,
   "detalle": "Firmado y fechado en el ángulo inferior izquierdo.",
-  "precio": 200
+  "precio": 200,
+  "subasta": "https://www.livesubastas.com/item/819/13384?page=1"
  },
  {
   "lote": 36,
@@ -537,7 +572,8 @@
   "estimada": false,
   "ano": 2002,
   "detalle": "Firmado y fechado en el ángulo inferior derecho.",
-  "precio": 150
+  "precio": 150,
+  "subasta": "https://www.livesubastas.com/item/819/13385?page=1"
  },
  {
   "lote": 37,
@@ -552,7 +588,8 @@
   "estimada": false,
   "ano": 1990,
   "detalle": "Firmado y fechado en el ángulo inferior derecho.",
-  "precio": 300
+  "precio": 300,
+  "subasta": "https://www.livesubastas.com/item/819/13386?page=1"
  },
  {
   "lote": 38,
@@ -567,7 +604,8 @@
   "estimada": false,
   "ano": 1993,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 400
+  "precio": 400,
+  "subasta": "https://www.livesubastas.com/item/819/13387?page=1"
  },
  {
   "lote": 39,
@@ -582,7 +620,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 1500
+  "precio": 1500,
+  "subasta": "https://www.livesubastas.com/item/819/13388?page=1"
  },
  {
   "lote": 40,
@@ -597,7 +636,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Al dorso etiqueta",
-  "precio": 20000
+  "precio": 20000,
+  "subasta": "https://www.livesubastas.com/item/819/13389?page=1"
  },
  {
   "lote": 41,
@@ -612,7 +652,8 @@
   "estimada": false,
   "ano": 2008,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 2500
+  "precio": 2500,
+  "subasta": "https://www.livesubastas.com/item/819/13390?page=1"
  },
  {
   "lote": 42,
@@ -627,7 +668,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 600
+  "precio": 400,
+  "subasta": "https://www.livesubastas.com/item/819/13391?page=1"
  },
  {
   "lote": 43,
@@ -642,7 +684,8 @@
   "estimada": false,
   "ano": 1990,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 400
+  "precio": 400,
+  "subasta": "https://www.livesubastas.com/item/819/13392?page=1"
  },
  {
   "lote": 44,
@@ -657,7 +700,8 @@
   "estimada": false,
   "ano": 1953,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 1500
+  "precio": 1800,
+  "subasta": "https://www.livesubastas.com/item/819/13393?page=1"
  },
  {
   "lote": 45,
@@ -672,7 +716,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 300
+  "precio": 300,
+  "subasta": "https://www.livesubastas.com/item/819/13394?page=1"
  },
  {
   "lote": 46,
@@ -687,7 +732,8 @@
   "estimada": false,
   "ano": 2002,
   "detalle": "Firmado y fechado en el ángulo inferior derecho.",
-  "precio": 200
+  "precio": 300,
+  "subasta": "https://www.livesubastas.com/item/819/13395?page=1"
  },
  {
   "lote": 47,
@@ -702,7 +748,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo superior izquierdo",
-  "precio": 800
+  "precio": 800,
+  "subasta": "https://www.livesubastas.com/item/819/13396?page=1"
  },
  {
   "lote": 48,
@@ -716,8 +763,9 @@
   "ancho": 90.0,
   "estimada": false,
   "ano": null,
-  "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 150
+  "detalle": "Firmado en el ángulo inferior derecho.",
+  "precio": 200,
+  "subasta": "https://www.livesubastas.com/item/819/13397?page=1"
  },
  {
   "lote": 49,
@@ -732,7 +780,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 1500
+  "precio": 1500,
+  "subasta": "https://www.livesubastas.com/item/819/13398?page=1"
  },
  {
   "lote": 50,
@@ -747,7 +796,8 @@
   "estimada": false,
   "ano": 1950,
   "detalle": "Firmado en el ángulo inferior izquierdo. Titulado y firmado al dorso por el Artista",
-  "precio": 12000
+  "precio": 12000,
+  "subasta": "https://www.livesubastas.com/item/819/13399?page=1"
  },
  {
   "lote": 51,
@@ -762,7 +812,8 @@
   "estimada": false,
   "ano": 2017,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 2500
+  "precio": 2500,
+  "subasta": "https://www.livesubastas.com/item/819/13400?page=1"
  },
  {
   "lote": 52,
@@ -777,7 +828,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 600
+  "precio": 600,
+  "subasta": "https://www.livesubastas.com/item/819/13401?page=1"
  },
  {
   "lote": 53,
@@ -792,7 +844,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 450
+  "precio": 450,
+  "subasta": "https://www.livesubastas.com/item/819/13402?page=1"
  },
  {
   "lote": 54,
@@ -807,7 +860,8 @@
   "estimada": false,
   "ano": 1947,
   "detalle": "Firmado y fechado en el ángulo inferior izquierdo.",
-  "precio": 1100
+  "precio": 1100,
+  "subasta": "https://www.livesubastas.com/item/819/13403?page=1"
  },
  {
   "lote": 55,
@@ -822,7 +876,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 200
+  "precio": 200,
+  "subasta": "https://www.livesubastas.com/item/819/13404?page=1"
  },
  {
   "lote": 56,
@@ -837,7 +892,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 200
+  "precio": 200,
+  "subasta": "https://www.livesubastas.com/item/819/13405?page=1"
  },
  {
   "lote": 57,
@@ -852,7 +908,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 150
+  "precio": 150,
+  "subasta": "https://www.livesubastas.com/item/819/13406?page=1"
  },
  {
   "lote": 58,
@@ -867,7 +924,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 800
+  "precio": 800,
+  "subasta": "https://www.livesubastas.com/item/819/13407?page=1"
  },
  {
   "lote": 59,
@@ -882,7 +940,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 150
+  "precio": 150,
+  "subasta": "https://www.livesubastas.com/item/819/13408?page=1"
  },
  {
   "lote": 60,
@@ -897,7 +956,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 1500
+  "precio": 1500,
+  "subasta": "https://www.livesubastas.com/item/819/13409?page=1"
  },
  {
   "lote": 61,
@@ -912,7 +972,8 @@
   "estimada": false,
   "ano": 2015,
   "detalle": "Firmado y fechado en el ángulo inferior derecho.",
-  "precio": 3500
+  "precio": 3500,
+  "subasta": "https://www.livesubastas.com/item/819/13410?page=1"
  },
  {
   "lote": 62,
@@ -927,7 +988,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 2500
+  "precio": 2500,
+  "subasta": "https://www.livesubastas.com/item/819/13411?page=1"
  },
  {
   "lote": 63,
@@ -942,7 +1004,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 500
+  "precio": 500,
+  "subasta": "https://www.livesubastas.com/item/819/13412?page=1"
  },
  {
   "lote": 64,
@@ -957,7 +1020,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 500
+  "precio": 500,
+  "subasta": "https://www.livesubastas.com/item/819/13413?page=1"
  },
  {
   "lote": 65,
@@ -972,7 +1036,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 1000
+  "precio": 1500,
+  "subasta": "https://www.livesubastas.com/item/819/13414?page=1"
  },
  {
   "lote": 66,
@@ -987,7 +1052,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 250
+  "precio": 250,
+  "subasta": "https://www.livesubastas.com/item/819/13415?page=1"
  },
  {
   "lote": 67,
@@ -1002,7 +1068,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 200
+  "precio": 200,
+  "subasta": "https://www.livesubastas.com/item/819/13416?page=1"
  },
  {
   "lote": 68,
@@ -1017,7 +1084,8 @@
   "estimada": false,
   "ano": 2007,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 300
+  "precio": 300,
+  "subasta": "https://www.livesubastas.com/item/819/13417?page=1"
  },
  {
   "lote": 69,
@@ -1032,7 +1100,8 @@
   "estimada": false,
   "ano": 1970,
   "detalle": "Firmado y fechado en el ángulo inferior izquierdo.",
-  "precio": 150
+  "precio": 150,
+  "subasta": "https://www.livesubastas.com/item/819/13418?page=1"
  },
  {
   "lote": 70,
@@ -1047,7 +1116,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 800
+  "precio": 600,
+  "subasta": "https://www.livesubastas.com/item/819/13419?page=1"
  },
  {
   "lote": 71,
@@ -1062,7 +1132,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 100
+  "precio": 100,
+  "subasta": "https://www.livesubastas.com/item/819/13420?page=1"
  },
  {
   "lote": 72,
@@ -1077,7 +1148,8 @@
   "estimada": false,
   "ano": 1915,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 1100
+  "precio": 1500,
+  "subasta": "https://www.livesubastas.com/item/819/13421?page=1"
  },
  {
   "lote": 73,
@@ -1092,7 +1164,8 @@
   "estimada": false,
   "ano": 2010,
   "detalle": "Firmado en el ángulo inferior izquierdo.",
-  "precio": 3500
+  "precio": 3500,
+  "subasta": "https://www.livesubastas.com/item/819/13422?page=1"
  },
  {
   "lote": 74,
@@ -1107,7 +1180,8 @@
   "estimada": false,
   "ano": 1964,
   "detalle": "Firmado y fechado en el ángulo inferior izquierdo.",
-  "precio": 2500
+  "precio": 2500,
+  "subasta": "https://www.livesubastas.com/item/819/13423?page=1"
  },
  {
   "lote": 75,
@@ -1122,7 +1196,8 @@
   "estimada": false,
   "ano": 2012,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 500
+  "precio": 300,
+  "subasta": "https://www.livesubastas.com/item/819/13424?page=1"
  },
  {
   "lote": 76,
@@ -1137,7 +1212,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 500
+  "precio": 300,
+  "subasta": "https://www.livesubastas.com/item/819/13425?page=1"
  },
  {
   "lote": 77,
@@ -1152,7 +1228,8 @@
   "estimada": false,
   "ano": 1999,
   "detalle": "Firmado y fechado en el ángulo inferior derecho.",
-  "precio": 1000
+  "precio": 1000,
+  "subasta": "https://www.livesubastas.com/item/819/13426?page=1"
  },
  {
   "lote": 78,
@@ -1167,7 +1244,8 @@
   "estimada": false,
   "ano": 1997,
   "detalle": "Firmado y fechado en el ángulo inferior izquierdo.",
-  "precio": 250
+  "precio": 500,
+  "subasta": "https://www.livesubastas.com/item/819/13427?page=1"
  },
  {
   "lote": 79,
@@ -1182,7 +1260,8 @@
   "estimada": false,
   "ano": null,
   "detalle": "Firmado en el ángulo inferior derecho.",
-  "precio": 200
+  "precio": 200,
+  "subasta": "https://www.livesubastas.com/item/819/13428?page=1"
  },
  {
   "lote": 80,
@@ -1197,6 +1276,7 @@
   "estimada": false,
   "ano": 1906,
   "detalle": "Firmado y fechado en el ángulo inferior izquierdo.",
-  "precio": 2000
+  "precio": 2000,
+  "subasta": "https://www.livesubastas.com/item/819/13429?page=1"
  }
 ]
